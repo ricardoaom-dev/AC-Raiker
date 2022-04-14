@@ -1,8 +1,9 @@
 package com.raikerxv.ui.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.raikerxv.databinding.ActivityMainBinding
 import com.raikerxv.model.MoviesRepository
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private val moviesRepository by lazy { MoviesRepository(this) }
 
-    private val adapter = MoviesAdapter{
+    private val adapter = MoviesAdapter {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(DetailActivity.MOVIE, it)
         startActivity(intent)
@@ -22,12 +23,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.recycler.adapter = adapter
+        with(ActivityMainBinding.inflate(layoutInflater)) {
+            setContentView(root)
 
-        lifecycleScope.launch {
-            adapter.submitList(moviesRepository.findPopularMovies().results)
+            recycler.adapter = adapter
+
+            lifecycleScope.launch {
+                progress.visibility = View.VISIBLE
+                adapter.submitList(moviesRepository.findPopularMovies().results)
+                progress.visibility = View.GONE
+            }
+
         }
     }
 }
