@@ -1,26 +1,25 @@
 package com.raikerxv.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.raikerxv.model.Movie
 import com.raikerxv.model.MoviesRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val moviesRepository: MoviesRepository,
 ) : ViewModel() {
 
-    private val _state = MutableLiveData(MainUIState())
-    val state: LiveData<MainUIState>
-        get() {
-            if (_state.value?.movies == null) {
-                refresh()
-            }
-            return _state
-        }
+    private val _state = MutableStateFlow(MainUIState())
+    val state: StateFlow<MainUIState> = _state.asStateFlow()
+
+    init {
+        refresh()
+    }
 
     private fun refresh() {
         viewModelScope.launch {
@@ -30,7 +29,7 @@ class MainViewModel(
     }
 
     fun onMovieClick(movie: Movie) {
-        _state.value = _state.value?.copy(navigateTo = movie)
+        _state.value = _state.value.copy(navigateTo = movie)
     }
 
     data class MainUIState(
