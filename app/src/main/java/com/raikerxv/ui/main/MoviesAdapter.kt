@@ -1,17 +1,18 @@
-package com.raikerxv.ui
+package com.raikerxv.ui.main
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.raikerxv.R
 import com.raikerxv.databinding.ViewMovieBinding
 import com.raikerxv.model.Movie
-import kotlin.properties.Delegates
+import com.raikerxv.ui.basicDiffUtil
+import com.raikerxv.ui.inflate
+import com.raikerxv.ui.loadUrl
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :
-    ListAdapter<Movie, MoviesAdapter.ViewHolder>(basicDiffUtil {old, new -> old.id == new.id}) {
+    ListAdapter<Movie, MoviesAdapter.ViewHolder>(basicDiffUtil { old, new -> old.id == new.id}) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = parent.inflate(R.layout.view_movie, false)

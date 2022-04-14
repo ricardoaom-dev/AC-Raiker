@@ -1,24 +1,13 @@
-package com.raikerxv.ui
+package com.raikerxv.ui.main
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.location.Geocoder
-import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.raikerxv.R
 import com.raikerxv.databinding.ActivityMainBinding
 import com.raikerxv.model.MoviesRepository
-import com.raikerxv.model.RemoteConnection
-import kotlin.coroutines.resume
+import com.raikerxv.ui.detail.DetailActivity
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 
 class MainActivity : AppCompatActivity() {
 

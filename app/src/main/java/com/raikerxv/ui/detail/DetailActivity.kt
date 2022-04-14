@@ -1,10 +1,11 @@
-package com.raikerxv.ui
+package com.raikerxv.ui.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.raikerxv.databinding.ActivityDetailBinding
 import com.raikerxv.model.Movie
+import com.raikerxv.ui.loadUrl
 
 class DetailActivity : AppCompatActivity() {
     companion object {

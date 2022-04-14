@@ -1,4 +1,4 @@
-package com.raikerxv.ui
+package com.raikerxv.ui.detail
 
 import android.content.Context
 import android.util.AttributeSet
