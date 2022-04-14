@@ -14,25 +14,15 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.raikerxv.R
 import com.raikerxv.databinding.ActivityMainBinding
+import com.raikerxv.model.MoviesRepository
 import com.raikerxv.model.RemoteConnection
 import kotlin.coroutines.resume
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class MainActivity : AppCompatActivity() {
-    private val requestPermissionLauncher: ActivityResultLauncher<String> =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            lifecycleScope.launch {
-                val location = getLocation(isGranted)
-                val movies = RemoteConnection.service.listPopularMovies(
-                    getString(R.string.api_key),
-                    getRegionFromLocation(location)
-                )
-                adapter.movies = movies.results
-            }
-        }
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val moviesRepository by lazy { MoviesRepository(this) }
 
     private val adapter = MoviesAdapter{
         val intent = Intent(this, DetailActivity::class.java)
@@ -47,32 +37,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.recycler.adapter = adapter
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-    }
-
-    private suspend fun getLocation(granted: Boolean): Location? {
-        return if (granted) findLastLocation() else null
-    }
-
-    @SuppressLint("MissingPermission")
-    private suspend fun findLastLocation(): Location? =
-        suspendCancellableCoroutine { continuation ->
-            fusedLocationClient.lastLocation
-                .addOnCompleteListener {
-                    continuation.resume(it.result)
-                }
+        lifecycleScope.launch {
+            adapter.movies = moviesRepository.findPopularMovies().results
         }
-
-    private fun getRegionFromLocation(location: Location?): String {
-        val geocoder = Geocoder(this@MainActivity)
-        val fromLocation = location?.let {
-            geocoder.getFromLocation(
-                location.latitude,
-                location.longitude,
-                1
-            )
-        }
-        return fromLocation?.firstOrNull()?.countryCode ?: "US"
     }
 }
