@@ -2,18 +2,18 @@ package com.raikerxv.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.isVisible
 import com.raikerxv.databinding.ActivityMainBinding
 import com.raikerxv.model.Movie
 import com.raikerxv.model.MoviesRepository
 import com.raikerxv.ui.detail.DetailActivity
 
-class MainActivity : AppCompatActivity(), MainPresenter.MainView {
+class MainActivity : AppCompatActivity() {
 
-    private val presenter by lazy { MainPresenter(MoviesRepository(this), lifecycleScope) }
-    private val adapter = MoviesAdapter { presenter.onMovieClick(it) }
+    private val viewModel: MainViewModel by viewModels { MainViewModelFactory(MoviesRepository(this)) }
+    private val adapter = MoviesAdapter { viewModel.onMovieClick(it) }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,27 +22,17 @@ class MainActivity : AppCompatActivity(), MainPresenter.MainView {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.recycler.adapter = adapter
-        presenter.onCreate(this)
+
+        viewModel.state.observe(this, this::updateUI)
     }
 
-    override fun onDestroy() {
-        presenter.onDestroy()
-        super.onDestroy()
+    private fun updateUI(state: MainViewModel.MainUIState) {
+        binding.progress.isVisible = state.loading
+        state.movies?.let(adapter::submitList)
+        state.navigateTo?.let(::navigateTo)
     }
 
-    override fun showProgress() {
-        binding.progress.visibility = View.VISIBLE
-    }
-
-    override fun updateData(movies: List<Movie>) {
-        adapter.submitList(movies)
-    }
-
-    override fun hideProgress() {
-        binding.progress.visibility = View.GONE
-    }
-
-    override fun navigateTo(movie: Movie) {
+    private fun navigateTo(movie: Movie) {
         Intent(this, DetailActivity::class.java)
             .apply { putExtra(DetailActivity.MOVIE, movie) }
             .let { startActivity(it) }
