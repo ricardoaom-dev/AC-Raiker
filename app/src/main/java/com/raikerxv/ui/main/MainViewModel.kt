@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.raikerxv.model.Movie
 import com.raikerxv.model.MoviesRepository
+import com.raikerxv.ui.detail.DetailViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -16,6 +19,9 @@ class MainViewModel(
 
     private val _state = MutableStateFlow(MainUIState())
     val state: StateFlow<MainUIState> = _state.asStateFlow()
+
+    private val _events = Channel<DetailUIEvent>()
+    val events = _events.receiveAsFlow()
 
     init {
         refresh()
@@ -29,14 +35,17 @@ class MainViewModel(
     }
 
     fun onMovieClick(movie: Movie) {
-        _state.value = _state.value.copy(navigateTo = movie)
+        viewModelScope.launch { _events.send(DetailUIEvent.NavigateTo(movie)) }
     }
 
     data class MainUIState(
         val loading: Boolean = false,
-        val movies: List<Movie>? = null,
-        val navigateTo: Movie? = null
+        val movies: List<Movie>? = null
     )
+
+    sealed interface DetailUIEvent {
+        data class NavigateTo(val movie: Movie) : DetailUIEvent
+    }
 
 }
 
