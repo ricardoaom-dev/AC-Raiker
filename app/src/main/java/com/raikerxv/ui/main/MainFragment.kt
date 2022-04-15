@@ -1,20 +1,17 @@
 package com.raikerxv.ui.main
 
-import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.raikerxv.R
 import com.raikerxv.databinding.FragmentMainBinding
-import com.raikerxv.model.Movie
 import com.raikerxv.model.MoviesRepository
-import com.raikerxv.ui.common.PermissionRequester
 import com.raikerxv.ui.launchAndCollect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -28,13 +25,20 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         mainState = buildMainState()
         val binding = FragmentMainBinding.bind(view).apply { recycler.adapter = adapter }
-        viewLifecycleOwner.launchAndCollect(viewModel.state) { binding.updateUI(it) }
+
+        with(viewModel.state) {
+            diff({ it.movies }, adapter::submitList)
+            diff({ it.loading }) { isVisible -> binding.progress.isVisible = isVisible }
+        }
+
         mainState.requestLocationPermission { viewModel.onUIReady() }
     }
 
-    private fun FragmentMainBinding.updateUI(state: MainViewModel.MainUIState) {
-        progress.isVisible = state.loading
-        state.movies?.let(adapter::submitList)
+    private fun <T, U> Flow<T>.diff(mapf: (T) -> U, body: (U) -> Unit) {
+        viewLifecycleOwner.launchAndCollect(
+            flow = map(mapf).distinctUntilChanged(),
+            body = body
+        )
     }
 
 }

@@ -12,7 +12,7 @@ import com.raikerxv.ui.inflate
 import com.raikerxv.ui.loadUrl
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :
-    ListAdapter<Movie, MoviesAdapter.ViewHolder>(basicDiffUtil { old, new -> old.id == new.id}) {
+    ListAdapter<Movie, MoviesAdapter.ViewHolder>(basicDiffUtil { old, new -> old.id == new.id }) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = parent.inflate(R.layout.view_movie, false)
