@@ -2,7 +2,6 @@ package com.raikerxv.ui.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.raikerxv.R
@@ -26,19 +25,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         mainState = buildMainState()
         val binding = FragmentMainBinding.bind(view).apply { recycler.adapter = adapter }
 
-        with(viewModel.state) {
-            diff({ it.movies }, adapter::submitList)
-            diff({ it.loading }) { isVisible -> binding.progress.isVisible = isVisible }
+        viewLifecycleOwner.launchAndCollect(viewModel.state) {
+            binding.loading = it.loading
+            binding.movies = it.movies
         }
 
         mainState.requestLocationPermission { viewModel.onUIReady() }
-    }
-
-    private fun <T, U> Flow<T>.diff(mapf: (T) -> U, body: (U) -> Unit) {
-        viewLifecycleOwner.launchAndCollect(
-            flow = map(mapf).distinctUntilChanged(),
-            body = body
-        )
     }
 
 }

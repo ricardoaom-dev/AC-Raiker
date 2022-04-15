@@ -9,7 +9,6 @@ import com.raikerxv.databinding.ViewMovieBinding
 import com.raikerxv.model.Movie
 import com.raikerxv.ui.basicDiffUtil
 import com.raikerxv.ui.inflate
-import com.raikerxv.ui.loadUrl
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :
     ListAdapter<Movie, MoviesAdapter.ViewHolder>(basicDiffUtil { old, new -> old.id == new.id }) {
@@ -27,9 +26,8 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ViewMovieBinding.bind(view)
-        fun bind(movie: Movie) = with(binding) {
-            movieTitle.text = movie.title
-            movieCover.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+        fun bind(movie: Movie) {
+            binding.movie = movie
         }
     }
 }
