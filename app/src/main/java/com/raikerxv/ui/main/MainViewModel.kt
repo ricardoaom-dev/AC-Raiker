@@ -20,9 +20,6 @@ class MainViewModel(
     private val _state = MutableStateFlow(MainUIState())
     val state: StateFlow<MainUIState> = _state.asStateFlow()
 
-    private val _events = Channel<DetailUIEvent>()
-    val events = _events.receiveAsFlow()
-
     init {
         refresh()
     }
@@ -35,17 +32,18 @@ class MainViewModel(
     }
 
     fun onMovieClick(movie: Movie) {
-        viewModelScope.launch { _events.send(DetailUIEvent.NavigateTo(movie)) }
+        _state.value = _state.value.copy(navigateTo = movie)
+    }
+
+    fun onNavigationDone() {
+        _state.value = _state.value.copy(navigateTo = null)
     }
 
     data class MainUIState(
         val loading: Boolean = false,
-        val movies: List<Movie>? = null
+        val movies: List<Movie>? = null,
+        val navigateTo: Movie? = null
     )
-
-    sealed interface DetailUIEvent {
-        data class NavigateTo(val movie: Movie) : DetailUIEvent
-    }
 
 }
 
