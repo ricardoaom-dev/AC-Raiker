@@ -1,4 +1,4 @@
-package com.raikerxv.domain
+package com.raikerxv.usecases
 
 import com.raikerxv.data.Error
 import com.raikerxv.data.MoviesRepository

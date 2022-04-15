@@ -3,9 +3,9 @@ package com.raikerxv.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.raikerxv.domain.FindMovieUseCase
-import com.raikerxv.domain.SwitchMovieFavoriteUseCase
-import com.raikerxv.data.database.Movie
+import com.raikerxv.domain.Movie
+import com.raikerxv.usecases.FindMovieUseCase
+import com.raikerxv.usecases.SwitchMovieFavoriteUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,8 +1,8 @@
-package com.raikerxv.domain
+package com.raikerxv.usecases
 
 import com.raikerxv.data.Error
 import com.raikerxv.data.MoviesRepository
-import com.raikerxv.data.database.Movie
+import com.raikerxv.domain.Movie
 
 class SwitchMovieFavoriteUseCase(private val moviesRepository: MoviesRepository) {
 

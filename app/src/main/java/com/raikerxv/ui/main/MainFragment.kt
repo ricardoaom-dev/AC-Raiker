@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.raikerxv.R
 import com.raikerxv.databinding.FragmentMainBinding
-import com.raikerxv.domain.GetPopularMoviesUseCase
-import com.raikerxv.domain.RequestPopularMoviesUseCase
+import com.raikerxv.usecases.GetPopularMoviesUseCase
+import com.raikerxv.usecases.RequestPopularMoviesUseCase
 import com.raikerxv.data.MoviesRepository
 import com.raikerxv.ui.app
 import com.raikerxv.ui.launchAndCollect

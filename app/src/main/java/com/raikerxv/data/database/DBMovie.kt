@@ -1,13 +1,10 @@
 package com.raikerxv.data.database
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Entity
-data class Movie(
+data class DBMovie(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val overview: String,
@@ -19,4 +16,4 @@ data class Movie(
     val popularity: Double,
     val voteAverage: Double,
     val favorite: Boolean
-): Parcelable
+)

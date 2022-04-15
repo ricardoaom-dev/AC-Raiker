@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.raikerxv.R
 import com.raikerxv.data.Error
-import com.raikerxv.data.database.Movie
+import com.raikerxv.domain.Movie
 import com.raikerxv.ui.common.PermissionRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -31,10 +31,10 @@ class MainState(
         }
     }
 
-    fun errorToString(error: Error) = when (error){
+    fun errorToString(error: Error) = when (error) {
         Error.Connectivity -> context.getString(R.string.error_connectivity)
         is Error.Server -> context.getString(R.string.error_server, error.code)
-        is Error.Unknown ->context.getString(R.string.error_unknown, error.message)
+        is Error.Unknown -> context.getString(R.string.error_unknown, error.message)
     }
 
 }

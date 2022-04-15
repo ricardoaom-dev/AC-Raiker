@@ -2,9 +2,10 @@ package com.raikerxv.data
 
 import com.raikerxv.App
 import com.raikerxv.R
-import com.raikerxv.data.database.Movie
+
 import com.raikerxv.data.datasource.MovieLocalDataSource
 import com.raikerxv.data.datasource.MovieRemoteDataSource
+import com.raikerxv.domain.Movie
 import kotlinx.coroutines.flow.Flow
 
 class MoviesRepository(application: App) {
@@ -20,7 +21,7 @@ class MoviesRepository(application: App) {
     suspend fun requestPopularMovies(): Error? = tryCall {
         if (localDataSource.isEmpty()) {
             val movies = remoteDataSource.findPopularMovies(regionRepository.findLastRegion())
-            localDataSource.save(movies.results.toLocalMovies())
+            localDataSource.save(movies)
         }
     }
 
@@ -30,19 +31,3 @@ class MoviesRepository(application: App) {
     }
 
 }
-
-private fun List<RemoteMovie>.toLocalMovies(): List<Movie> = map { it.toLocalMovie() }
-
-private fun RemoteMovie.toLocalMovie(): Movie = Movie(
-    id,
-    title,
-    overview,
-    releaseDate,
-    posterPath,
-    backdropPath ?: "",
-    originalLanguage,
-    originalTitle,
-    popularity,
-    voteAverage,
-    false
-)

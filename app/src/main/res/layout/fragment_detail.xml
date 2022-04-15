@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.raikerxv.data.database.Movie" />
+        <import type="com.raikerxv.domain.Movie" />
 
         <variable
             name="movie"

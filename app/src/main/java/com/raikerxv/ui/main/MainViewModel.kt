@@ -3,11 +3,11 @@ package com.raikerxv.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.raikerxv.domain.GetPopularMoviesUseCase
-import com.raikerxv.domain.RequestPopularMoviesUseCase
 import com.raikerxv.data.Error
-import com.raikerxv.data.database.Movie
 import com.raikerxv.data.toError
+import com.raikerxv.domain.Movie
+import com.raikerxv.usecases.GetPopularMoviesUseCase
+import com.raikerxv.usecases.RequestPopularMoviesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

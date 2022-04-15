@@ -8,8 +8,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.raikerxv.R
 import com.raikerxv.databinding.FragmentDetailBinding
-import com.raikerxv.domain.FindMovieUseCase
-import com.raikerxv.domain.SwitchMovieFavoriteUseCase
+import com.raikerxv.usecases.FindMovieUseCase
+import com.raikerxv.usecases.SwitchMovieFavoriteUseCase
 import com.raikerxv.data.MoviesRepository
 import com.raikerxv.ui.app
 import com.raikerxv.ui.launchAndCollect

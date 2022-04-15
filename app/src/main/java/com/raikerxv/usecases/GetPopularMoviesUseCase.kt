@@ -1,7 +1,7 @@
-package com.raikerxv.domain
+package com.raikerxv.usecases
 
 import com.raikerxv.data.MoviesRepository
-import com.raikerxv.data.database.Movie
+import com.raikerxv.domain.Movie
 import kotlinx.coroutines.flow.Flow
 
 class GetPopularMoviesUseCase(private val moviesRepository: MoviesRepository) {
