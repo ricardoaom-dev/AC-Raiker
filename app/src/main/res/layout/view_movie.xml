@@ -7,7 +7,7 @@
         <import type="com.raikerxv.domain.Movie"/>
         <variable
             name="movie"
-            type="Movie" />
+            type="com.raikerxv.domain.Movie" />
     </data>
 
     <LinearLayout

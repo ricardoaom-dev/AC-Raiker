@@ -3,13 +3,11 @@ package com.raikerxv.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.raikerxv.domain.Movie
 import com.raikerxv.usecases.FindMovieUseCase
 import com.raikerxv.usecases.SwitchMovieFavoriteUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
@@ -35,7 +33,7 @@ class DetailViewModel(
         }
     }
 
-    data class DetailUIState(val movie: Movie? = null)
+    data class DetailUIState(val movie: com.raikerxv.domain.Movie? = null)
 
 }
 

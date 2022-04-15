@@ -5,13 +5,13 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.raikerxv.R
+import com.raikerxv.data.AndroidPermissionChecker
 import com.raikerxv.data.MoviesRepository
+import com.raikerxv.data.PlayServicesLocationDataSource
 import com.raikerxv.data.RegionRepository
+import com.raikerxv.data.database.MovieRoomDataSource
+import com.raikerxv.data.server.MovieServerDataSource
 import com.raikerxv.databinding.FragmentMainBinding
-import com.raikerxv.framework.AndroidPermissionChecker
-import com.raikerxv.framework.PlayServicesLocationDataSource
-import com.raikerxv.framework.database.MovieRoomDataSource
-import com.raikerxv.framework.server.MovieServerDataSource
 import com.raikerxv.ui.app
 import com.raikerxv.ui.launchAndCollect
 import com.raikerxv.usecases.GetPopularMoviesUseCase

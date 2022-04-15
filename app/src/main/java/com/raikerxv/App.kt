@@ -2,7 +2,7 @@ package com.raikerxv
 
 import android.app.Application
 import androidx.room.Room
-import com.raikerxv.framework.database.MovieDatabase
+import com.raikerxv.data.database.MovieDatabase
 
 class App : Application() {
 

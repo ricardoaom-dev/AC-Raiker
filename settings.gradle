@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AC-Raiker"
 include ':app'
+include ':domain'
+include ':data'
+include ':usecases'
