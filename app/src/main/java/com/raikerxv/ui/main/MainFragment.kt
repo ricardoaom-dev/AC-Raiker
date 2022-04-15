@@ -9,9 +9,6 @@ import com.raikerxv.databinding.FragmentMainBinding
 import com.raikerxv.model.MoviesRepository
 import com.raikerxv.ui.app
 import com.raikerxv.ui.launchAndCollect
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -29,6 +26,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         viewLifecycleOwner.launchAndCollect(viewModel.state) {
             binding.loading = it.loading
             binding.movies = it.movies
+            binding.error = it.error?.let(mainState::errorToString)
         }
 
         mainState.requestLocationPermission { viewModel.onUIReady() }
