@@ -5,6 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.raikerxv.model.database.Movie
 
 @BindingAdapter("items")
-fun RecyclerView.settItems(movies: List<Movie>?) {
+fun RecyclerView.setItems(movies: List<Movie>?) {
     movies?.let { (adapter as? MoviesAdapter)?.submitList(it) }
 }

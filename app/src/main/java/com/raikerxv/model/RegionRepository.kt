@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Application
 import android.location.Geocoder
 import android.location.Location
+import com.raikerxv.model.datasource.LocationDataSource
+import com.raikerxv.model.datasource.PlayServicesLocationDataSource
 
 class RegionRepository(application: Application) {
 
@@ -11,11 +13,8 @@ class RegionRepository(application: Application) {
         private const val DEFAULT_REGION = "US"
     }
 
-    private val locationDataSource = PlayServicesLocationDataSource(application)
-    private val coarsePermissionChecker = PermissionChecker(
-        application,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
+    private val locationDataSource: LocationDataSource = PlayServicesLocationDataSource(application)
+    private val coarsePermissionChecker = PermissionChecker(application, Manifest.permission.ACCESS_COARSE_LOCATION)
     private val geocoder = Geocoder(application)
 
     suspend fun findLastRegion(): String = findLastLocation().toRegion()

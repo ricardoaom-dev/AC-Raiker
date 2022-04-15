@@ -11,9 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class MainViewModel(
-    private val moviesRepository: MoviesRepository,
-) : ViewModel() {
+class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
 
     private val _state = MutableStateFlow(MainUIState())
     val state: StateFlow<MainUIState> = _state.asStateFlow()
@@ -29,7 +27,8 @@ class MainViewModel(
     fun onUIReady() {
         viewModelScope.launch {
             _state.value = MainUIState(loading = true)
-            moviesRepository.requestPopularMovies()
+            val hideLoader = moviesRepository.requestPopularMovies()
+            if(hideLoader) _state.value = MainUIState(loading = false)
         }
     }
 

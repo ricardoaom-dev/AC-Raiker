@@ -1,33 +1,40 @@
 package com.raikerxv.model
 
-import com.raikerxv.model.RemoteMovie as RemoteMovie
-import com.raikerxv.model.database.Movie as LocalMovie
 import com.raikerxv.App
 import com.raikerxv.R
+import com.raikerxv.model.database.Movie
 import com.raikerxv.model.datasource.MovieLocalDataSource
 import com.raikerxv.model.datasource.MovieRemoteDataSource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
 
 class MoviesRepository(application: App) {
 
+    private val regionRepository = RegionRepository(application)
     private val localDataSource = MovieLocalDataSource(application.db.movieDao())
-    private val remoteDataSource = MovieRemoteDataSource(application.getString(R.string.api_key), RegionRepository(application))
+    private val remoteDataSource = MovieRemoteDataSource(application.getString(R.string.api_key))
 
     val popularMovies = localDataSource.movies
 
-    suspend fun requestPopularMovies() = withContext(Dispatchers.IO) {
-        if (localDataSource.isEmpty()) {
-            val movies = remoteDataSource.findPopularMovies()
+    fun findById(id: Int): Flow<Movie> = localDataSource.findById(id)
+
+    suspend fun requestPopularMovies(): Boolean {
+        return if (localDataSource.isEmpty()) {
+            val movies = remoteDataSource.findPopularMovies(regionRepository.findLastRegion())
             localDataSource.save(movies.results.toLocalMovies())
-        }
+            false
+        } else true
+    }
+
+    suspend fun switchFavorite(movie: Movie) {
+        val updatedMovie = movie.copy(favorite = !movie.favorite)
+        localDataSource.save(listOf(updatedMovie))
     }
 
 }
 
-private fun List<RemoteMovie>.toLocalMovies(): List<LocalMovie> = map { it.toLocalMovie() }
+private fun List<RemoteMovie>.toLocalMovies(): List<Movie> = map { it.toLocalMovie() }
 
-private fun RemoteMovie.toLocalMovie(): LocalMovie = LocalMovie(
+private fun RemoteMovie.toLocalMovie(): Movie = Movie(
     id,
     title,
     overview,
@@ -37,5 +44,6 @@ private fun RemoteMovie.toLocalMovie(): LocalMovie = LocalMovie(
     originalLanguage,
     originalTitle,
     popularity,
-    voteAverage
+    voteAverage,
+    false
 )

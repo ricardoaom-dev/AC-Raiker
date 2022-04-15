@@ -32,7 +32,7 @@ inline fun <T: Any> basicDiffUtil(
         areItemsTheSame(oldItem, newItem)
 
     override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
-        areItemsTheSame(oldItem, newItem)
+        areContentsTheSame(oldItem, newItem)
 
 }
 
@@ -42,7 +42,7 @@ fun <T> LifecycleOwner.launchAndCollect(
     body: (T) -> Unit
 ) {
     lifecycleScope.launch {
-        repeatOnLifecycle(state) {
+        this@launchAndCollect.repeatOnLifecycle(state) {
             flow.collect(body)
         }
     }

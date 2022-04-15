@@ -9,7 +9,6 @@ import com.raikerxv.ui.loadUrl
 @BindingAdapter("isVisible")
 fun View.setVisible(visible: Boolean?) {
     visible?.let { isVisible = it }
-
 }
 
 @BindingAdapter("url")
