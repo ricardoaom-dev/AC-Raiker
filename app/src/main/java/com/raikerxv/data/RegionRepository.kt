@@ -1,11 +1,11 @@
-package com.raikerxv.model
+package com.raikerxv.data
 
 import android.Manifest
 import android.app.Application
 import android.location.Geocoder
 import android.location.Location
-import com.raikerxv.model.datasource.LocationDataSource
-import com.raikerxv.model.datasource.PlayServicesLocationDataSource
+import com.raikerxv.data.datasource.LocationDataSource
+import com.raikerxv.data.datasource.PlayServicesLocationDataSource
 
 class RegionRepository(application: Application) {
 

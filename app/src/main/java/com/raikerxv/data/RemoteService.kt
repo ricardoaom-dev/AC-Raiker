@@ -1,4 +1,4 @@
-package com.raikerxv.model
+package com.raikerxv.data
 
 import retrofit2.http.GET
 import retrofit2.http.Query

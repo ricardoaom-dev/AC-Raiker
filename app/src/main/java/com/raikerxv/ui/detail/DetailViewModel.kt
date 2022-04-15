@@ -3,22 +3,27 @@ package com.raikerxv.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.raikerxv.model.MoviesRepository
-import com.raikerxv.model.database.Movie
+import com.raikerxv.domain.FindMovieUseCase
+import com.raikerxv.domain.SwitchMovieFavoriteUseCase
+import com.raikerxv.data.database.Movie
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class DetailViewModel(movieId: Int, private val repository: MoviesRepository) : ViewModel() {
+class DetailViewModel(
+    movieId: Int,
+    findMovieUseCase: FindMovieUseCase,
+    private val switchMovieFavoriteUseCase: SwitchMovieFavoriteUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailUIState())
     val state: StateFlow<DetailUIState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            repository.findById(movieId).collect {
+            findMovieUseCase(movieId).collect {
                 _state.value = DetailUIState(it)
             }
         }
@@ -26,7 +31,7 @@ class DetailViewModel(movieId: Int, private val repository: MoviesRepository) : 
 
     fun onFavoriteClicked() {
         viewModelScope.launch {
-            _state.value.movie?.let { repository.switchFavorite(it) }
+            _state.value.movie?.let { switchMovieFavoriteUseCase(it) }
         }
     }
 
@@ -35,9 +40,12 @@ class DetailViewModel(movieId: Int, private val repository: MoviesRepository) : 
 }
 
 @Suppress("UNCHECKED_CAST")
-class DetailViewModelFactory(private val movieId: Int, private val repository: MoviesRepository) :
+class DetailViewModelFactory(
+    private val movieId: Int, private val findMovieUseCase: FindMovieUseCase,
+    private val switchMovieFavoriteUseCase: SwitchMovieFavoriteUseCase
+) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return DetailViewModel(movieId, repository) as T
+        return DetailViewModel(movieId, findMovieUseCase, switchMovieFavoriteUseCase) as T
     }
 }

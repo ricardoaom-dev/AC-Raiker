@@ -1,4 +1,4 @@
-package com.raikerxv.model.datasource
+package com.raikerxv.data.datasource
 
 import android.annotation.SuppressLint
 import android.app.Application

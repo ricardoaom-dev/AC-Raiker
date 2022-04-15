@@ -1,6 +1,6 @@
-package com.raikerxv.model.datasource
+package com.raikerxv.data.datasource
 
-import com.raikerxv.model.RemoteConnection
+import com.raikerxv.data.RemoteConnection
 
 class MovieRemoteDataSource(private val apiKey: String) {
 

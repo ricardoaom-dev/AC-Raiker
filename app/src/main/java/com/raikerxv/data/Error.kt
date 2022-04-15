@@ -1,4 +1,4 @@
-package com.raikerxv.model
+package com.raikerxv.data
 
 import java.io.IOException
 import java.lang.Exception

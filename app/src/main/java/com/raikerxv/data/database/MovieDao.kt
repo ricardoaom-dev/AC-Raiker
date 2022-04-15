@@ -1,4 +1,4 @@
-package com.raikerxv.model.database
+package com.raikerxv.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

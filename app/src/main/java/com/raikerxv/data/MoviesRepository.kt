@@ -1,10 +1,10 @@
-package com.raikerxv.model
+package com.raikerxv.data
 
 import com.raikerxv.App
 import com.raikerxv.R
-import com.raikerxv.model.database.Movie
-import com.raikerxv.model.datasource.MovieLocalDataSource
-import com.raikerxv.model.datasource.MovieRemoteDataSource
+import com.raikerxv.data.database.Movie
+import com.raikerxv.data.datasource.MovieLocalDataSource
+import com.raikerxv.data.datasource.MovieRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 
 class MoviesRepository(application: App) {
