@@ -1,7 +1,7 @@
-package com.raikerxv.framework.datasource
+package com.raikerxv.framework.server
 
-import com.raikerxv.data.RemoteConnection
-import com.raikerxv.data.RemoteMovie
+import com.raikerxv.framework.server.RemoteConnection
+import com.raikerxv.framework.server.RemoteMovie
 import com.raikerxv.data.datasource.MovieRemoteDataSource
 import com.raikerxv.domain.Movie
 

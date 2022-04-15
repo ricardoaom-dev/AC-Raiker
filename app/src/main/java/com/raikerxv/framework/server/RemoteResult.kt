@@ -1,4 +1,4 @@
-package com.raikerxv.data
+package com.raikerxv.framework.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

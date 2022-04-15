@@ -1,7 +1,7 @@
 package com.raikerxv.usecases
 
-import com.raikerxv.data.Error
 import com.raikerxv.data.MoviesRepository
+import com.raikerxv.domain.Error
 
 class RequestPopularMoviesUseCase(private val moviesRepository: MoviesRepository) {
 

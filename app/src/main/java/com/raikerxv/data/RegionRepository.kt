@@ -1,34 +1,22 @@
 package com.raikerxv.data
 
-import android.Manifest
-import android.app.Application
-import android.location.Geocoder
-import android.location.Location
 import com.raikerxv.data.datasource.LocationDataSource
-import com.raikerxv.framework.datasource.PlayServicesLocationDataSource
 
-class RegionRepository(application: Application) {
+class RegionRepository(
+    private val locationDataSource: LocationDataSource,
+    private val permissionChecker: PermissionChecker
+) {
 
     companion object {
         private const val DEFAULT_REGION = "US"
     }
 
-    private val locationDataSource: LocationDataSource = PlayServicesLocationDataSource(application)
-    private val coarsePermissionChecker = PermissionChecker(application, Manifest.permission.ACCESS_COARSE_LOCATION)
-    private val geocoder = Geocoder(application)
-
-    suspend fun findLastRegion(): String = findLastLocation().toRegion()
-
-    private suspend fun findLastLocation(): Location? {
-        val success = coarsePermissionChecker.check()
-        return if (success) locationDataSource.findLastLocation() else null
-    }
-
-    private fun Location?.toRegion(): String {
-        val addresses = this?.let {
-            geocoder.getFromLocation(latitude, longitude, 1)
+    suspend fun findLastRegion(): String {
+        return if (permissionChecker.check(PermissionChecker.Permission.COARSE_LOCATION)) {
+            locationDataSource.findLastRegion() ?: DEFAULT_REGION
+        } else {
+            DEFAULT_REGION
         }
-        return addresses?.firstOrNull()?.countryCode ?: DEFAULT_REGION
     }
 
 }

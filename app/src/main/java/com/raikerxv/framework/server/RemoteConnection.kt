@@ -1,4 +1,4 @@
-package com.raikerxv.data
+package com.raikerxv.framework.server
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

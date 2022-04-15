@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.raikerxv.R
-import com.raikerxv.data.Error
+import com.raikerxv.domain.Error
 import com.raikerxv.domain.Movie
 import com.raikerxv.ui.common.PermissionRequester
 import kotlinx.coroutines.CoroutineScope

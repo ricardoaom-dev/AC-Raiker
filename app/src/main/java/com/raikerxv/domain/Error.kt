@@ -1,4 +1,4 @@
-package com.raikerxv.data
+package com.raikerxv.domain
 
 import java.io.IOException
 import java.lang.Exception
