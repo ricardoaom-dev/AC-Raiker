@@ -1,23 +1,18 @@
 package com.raikerxv.model
 
+import android.app.Application
+import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import kotlin.coroutines.resume
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-class PermissionChecker(activity: AppCompatActivity, private val permission: String) {
+class PermissionChecker(private val application: Application, private val permission: String) {
 
-    private var onRequest: (Boolean) -> Unit = {}
-    private val launcher = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        onRequest(isGranted)
-    }
-
-    suspend fun request(): Boolean =
-        suspendCancellableCoroutine { continuation ->
-            onRequest = {
-                continuation.resume(it)
-            }
-            launcher.launch(permission)
-        }
+    fun check(): Boolean = ContextCompat.checkSelfPermission(
+        application,
+        permission
+    ) == PackageManager.PERMISSION_GRANTED
 
 }

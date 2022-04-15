@@ -20,29 +20,16 @@ class MainViewModel(
     private val _state = MutableStateFlow(MainUIState())
     val state: StateFlow<MainUIState> = _state.asStateFlow()
 
-    init {
-        refresh()
-    }
-
-    private fun refresh() {
+    fun onUIReady() {
         viewModelScope.launch {
             _state.value = MainUIState(loading = true)
             _state.value = MainUIState(movies = moviesRepository.findPopularMovies().results)
         }
     }
 
-    fun onMovieClick(movie: Movie) {
-        _state.value = _state.value.copy(navigateTo = movie)
-    }
-
-    fun onNavigationDone() {
-        _state.value = _state.value.copy(navigateTo = null)
-    }
-
     data class MainUIState(
         val loading: Boolean = false,
-        val movies: List<Movie>? = null,
-        val navigateTo: Movie? = null
+        val movies: List<Movie>? = null
     )
 
 }
