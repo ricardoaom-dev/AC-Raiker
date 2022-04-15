@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import com.raikerxv.R
 import com.raikerxv.databinding.FragmentMainBinding
 import com.raikerxv.model.MoviesRepository
+import com.raikerxv.ui.app
 import com.raikerxv.ui.launchAndCollect
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.map
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(MoviesRepository(requireActivity().application))
+        MainViewModelFactory(MoviesRepository(requireActivity().app))
     }
     private lateinit var mainState: MainState
     private val adapter = MoviesAdapter { mainState.onMovieClicked(it) }

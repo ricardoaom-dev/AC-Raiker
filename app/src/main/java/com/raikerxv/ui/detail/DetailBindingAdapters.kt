@@ -1,7 +1,7 @@
 package com.raikerxv.ui.detail
 
 import androidx.databinding.BindingAdapter
-import com.raikerxv.model.Movie
+import com.raikerxv.model.database.Movie
 
 @BindingAdapter("movie")
 fun MovieDetailInfoView.bindMovie(movie: Movie?) {

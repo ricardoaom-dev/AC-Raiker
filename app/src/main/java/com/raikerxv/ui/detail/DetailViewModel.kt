@@ -2,13 +2,13 @@ package com.raikerxv.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.raikerxv.model.Movie
+import com.raikerxv.model.database.Movie
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class DetailViewModel(movie: Movie) : ViewModel() {
-    data class DetailUIState(val movie: Movie)
+    data class DetailUIState(val remoteMovie: Movie)
 
     private val _state = MutableStateFlow(DetailUIState(movie))
     val state: StateFlow<DetailUIState> = _state.asStateFlow()

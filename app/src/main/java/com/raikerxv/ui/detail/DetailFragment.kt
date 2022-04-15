@@ -22,6 +22,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         binding.movieDetailToolbar.setNavigationOnClickListener { findNavController().popBackStack() }
 
-        viewLifecycleOwner.launchAndCollect(viewModel.state) { binding.movie = it.movie }
+        viewLifecycleOwner.launchAndCollect(viewModel.state) { binding.movie = it.remoteMovie }
     }
 }
