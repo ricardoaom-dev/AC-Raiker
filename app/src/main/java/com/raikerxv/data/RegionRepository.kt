@@ -5,7 +5,7 @@ import android.app.Application
 import android.location.Geocoder
 import android.location.Location
 import com.raikerxv.data.datasource.LocationDataSource
-import com.raikerxv.data.datasource.PlayServicesLocationDataSource
+import com.raikerxv.framework.datasource.PlayServicesLocationDataSource
 
 class RegionRepository(application: Application) {
 

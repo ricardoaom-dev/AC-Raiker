@@ -1,4 +1,4 @@
-package com.raikerxv.data.database
+package com.raikerxv.framework.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

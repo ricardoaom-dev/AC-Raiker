@@ -1,4 +1,4 @@
-package com.raikerxv.data.database
+package com.raikerxv.framework.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
